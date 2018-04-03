@@ -1,0 +1,6 @@
+- name: build the image
+  docker_image: >
+    name=quandoo_centos
+    tag=quandoo
+    path="{{dockerfile}}"
+    state=present

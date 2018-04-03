@@ -1,0 +1,43 @@
+---
+- name: Create docker image
+  hosts: localhost
+  gather_facts: false  
+  tasks:
+    - include_role:
+        name: images
+
+- name: Spawn local docker containers
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - include_role:
+        name: nodes
+      vars:
+        container_name: "{{ item }}"
+        container_image: quandoo_centos:quandoo
+      with_items:
+        - container1
+        - container2
+
+- name: Deal with SSHD
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - include_role:
+        name: sshd
+      vars:
+        container_name: "{{ item }}"
+      with_items:
+        - container1
+        - container2
+
+- name: Connectivity test
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - include_role:
+        name: test
+      vars:
+        container_name: "{{ item }}"
+      with_items:
+        - container1

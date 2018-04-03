@@ -1,0 +1,10 @@
+- name: Get public key from docker container1
+  shell: docker container cp container1:/home/docker_root/.ssh/id_rsa.pub id_rsa-container1.pub
+
+- name: Add public key from docker container1 to container2
+  shell: docker container cp id_rsa-container1.pub container2:/home/docker_root/.ssh/authorized_keys 
+
+- name: Delete keys
+  file:
+    path: "{{dockerfile}}/id_rsa-container1.pub"
+    state: absent

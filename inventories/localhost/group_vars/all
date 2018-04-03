@@ -1,0 +1,2 @@
+dockerfile: "/root/Quandoo/"
+docker_network_name: "quandoo"
